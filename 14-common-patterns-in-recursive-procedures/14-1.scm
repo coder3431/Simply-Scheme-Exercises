@@ -1,12 +1,20 @@
-; > (remove-once ’morning ’(good morning good morning))
-; (GOOD GOOD MORNING)
-;
-; (It’s okay if your solution removes the other MORNING instead, as long as it removes only
-; one of them.)
+; Exercise 14.1
+; remove-once
+; only remove word once time.
 
-; Classification: keep
+; this is a combination of keep and accumulate
 
-(define (remove-once wd sent)
-  (cond ((empty? sent) sent)
-        ((equal? (first sent) wd) (bf sent))
-        (else (se (first sent) (remove-once (bf sent))))))
+
+(define (remove-once wo sent)
+    (define (remove-once-helper wo sent found)
+        (cond ((empty? sent) '())
+              ((and (equal? wo (first sent)) (not found))
+                 (se (first sent) (remove-once-helper wo (bf sent) True)))
+              ((and (equal? wo (first sent)) found) 
+                (se (remove-once-helper wo (bf sent) True)))
+               (else (se (first sent) (remove-once-helper wo (bf sent) found))
+    )))
+
+    (remove-once-helper wo sent False)
+
+) 
