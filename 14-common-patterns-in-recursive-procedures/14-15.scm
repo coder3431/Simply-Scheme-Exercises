@@ -6,22 +6,9 @@
 ; > (merge ’(4 7 18 40 99) ’(3 6 9 12 24 36 50))
 ; (3 4 6 7 9 12 18 24 36 40 50 99)
 
-(define (merge-value-helper n left right)
-  (if (empty? right)
-    (se left n)
-    (if (>= (first right) n)
-      (se left n right)
-      (merge-value-helper
-        n
-        (se left (first right))
-        (bf right)))))
-
-(define (merge-value n nums)
-  (merge-value-helper n '() nums))
-
-(define (merge nums-a nums-b)
-  (cond ((empty? nums-b) nums-a)
-        ((empty? nums-a) nums-b)
-        (else
-          (merge (merge-value (first nums-b) nums-a)
-                 (bf nums-b)))))
+(define (merge s1 s2)
+    (cond ((empty? s1) s2)
+          ((empty? s2) s1)
+          ((< (first s1) (first s2)) (se (first s1) (merge (bf s1) s2)))
+          ((< (first s2) (first s1)) (se (first s2) (merge s1 (bf s2))))
+          (else (se (first s1) (first s2) (merge (bf s1) (bf s2))))))
